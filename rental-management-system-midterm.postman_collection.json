@@ -1,0 +1,816 @@
+{
+  "info": {
+    "name": "rental-management-system-midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "leaseId",
+      "value": "paste-id-here"
+    },
+    {
+      "key": "signedLeaseId",
+      "value": "paste-id-here"
+    },
+    {
+      "key": "caretakerId",
+      "value": "paste-id-here"
+    },
+    {
+      "key": "tenantId",
+      "value": "paste-id-here"
+    },
+    {
+      "key": "skillId",
+      "value": "paste-id-here"
+    },
+    {
+      "key": "rentPaymentId",
+      "value": "paste-id-here"
+    }
+  ],
+  "item": [
+    {
+      "name": "A2 save lease",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDate\": \"2026-12-01\",\n  \"monthlyRent\": 150000,\n  \"unitLabel\": \"D1\",\n  \"tenant\": {\n    \"id\": \"{{tenantId}}\"\n  },\n  \"caretaker\": {\n    \"id\": \"{{caretakerId}}\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "A2 save tenant",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/tenants/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tenants",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"New\",\n  \"lastName\": \"Tenant\",\n  \"tenantCode\": \"TN-0999\",\n  \"phone\": \"0788999999\",\n  \"occupation\": \"Tester\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "A2 all leases",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/all",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "all"
+          ]
+        }
+      }
+    },
+    {
+      "name": "A2 get lease by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/{{leaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "{{leaseId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "A2 get lease by id (404 fail)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/00000000-0000-0000-0000-000000000000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "00000000-0000-0000-0000-000000000000"
+          ]
+        }
+      }
+    },
+    {
+      "name": "A2 update lease",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/update/{{leaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "update",
+            "{{leaseId}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDate\": \"2026-12-02\",\n  \"monthlyRent\": 155000,\n  \"unitLabel\": \"D1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "A2 delete lease",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/delete/{{leaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "delete",
+            "{{leaseId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "B1 tenants by lastName",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tenants/by-last-name?lastName=nshuti",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tenants",
+            "by-last-name"
+          ],
+          "query": [
+            {
+              "key": "lastName",
+              "value": "nshuti"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "B2 leases by status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/by-status?status=APPLIED",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "by-status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "APPLIED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "B3 leases between dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/between?start=2026-10-01&end=2026-10-31",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "between"
+          ],
+          "query": [
+            {
+              "key": "start",
+              "value": "2026-10-01"
+            },
+            {
+              "key": "end",
+              "value": "2026-10-31"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "C1 caretakers by skill",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/caretakers/by-maintenance-skill?name=plumb",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "caretakers",
+            "by-maintenance-skill"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "plumb"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "C2 free buildings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/buildings/free",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "buildings",
+            "free"
+          ]
+        }
+      }
+    },
+    {
+      "name": "C3 unused skills",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/maintenance-skills/unused",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "maintenance-skills",
+            "unused"
+          ]
+        }
+      }
+    },
+    {
+      "name": "C4 tenants of caretaker",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tenants/of-caretaker/{{caretakerId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tenants",
+            "of-caretaker",
+            "{{caretakerId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "C4 tenants of caretaker (404 fail)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tenants/of-caretaker/00000000-0000-0000-0000-000000000000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tenants",
+            "of-caretaker",
+            "00000000-0000-0000-0000-000000000000"
+          ]
+        }
+      }
+    },
+    {
+      "name": "D1 save lease in the past (400 fail)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDate\": \"2020-01-01\",\n  \"monthlyRent\": 100000,\n  \"unitLabel\": \"X\",\n  \"tenant\": {\n    \"id\": \"{{tenantId}}\"\n  },\n  \"caretaker\": {\n    \"id\": \"{{caretakerId}}\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "D1 save lease same caretaker+date (409 fail)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDate\": \"2026-12-01\",\n  \"monthlyRent\": 100000,\n  \"unitLabel\": \"X\",\n  \"tenant\": {\n    \"id\": \"{{tenantId}}\"\n  },\n  \"caretaker\": {\n    \"id\": \"{{caretakerId}}\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "D2 status APPLIED->APPROVED",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/{{leaseId}}/status?status=APPROVED",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "{{leaseId}}",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "APPROVED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "D2 status illegal move (400 fail)",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/{{signedLeaseId}}/status?status=APPLIED",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "{{signedLeaseId}}",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "APPLIED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "D3 add skill to caretaker",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/caretakers/{{caretakerId}}/maintenance-skills/{{skillId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "caretakers",
+            "{{caretakerId}}",
+            "maintenance-skills",
+            "{{skillId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "D3 add same skill again (409 fail)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/caretakers/{{caretakerId}}/maintenance-skills/{{skillId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "caretakers",
+            "{{caretakerId}}",
+            "maintenance-skills",
+            "{{skillId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "D4 move caretaker to building 4",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/caretakers/{{caretakerId}}/building?buildingNumber=4",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "caretakers",
+            "{{caretakerId}}",
+            "building"
+          ],
+          "query": [
+            {
+              "key": "buildingNumber",
+              "value": "4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "D4 building taken (409 fail)",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/caretakers/{{caretakerId}}/building?buildingNumber=2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "caretakers",
+            "{{caretakerId}}",
+            "building"
+          ],
+          "query": [
+            {
+              "key": "buildingNumber",
+              "value": "2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "E1 write rent payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rent-payments/save?leaseId={{signedLeaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "rent-payments",
+            "save"
+          ],
+          "query": [
+            {
+              "key": "leaseId",
+              "value": "{{signedLeaseId}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"period\": \"October 2026\",\n  \"note\": \"Paid by mobile money\",\n  \"amount\": 150000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E1 lease not SIGNED (400 fail)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rent-payments/save?leaseId={{leaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "rent-payments",
+            "save"
+          ],
+          "query": [
+            {
+              "key": "leaseId",
+              "value": "{{leaseId}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"period\": \"October 2026\",\n  \"note\": \"x\",\n  \"amount\": 1000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E2 rent payments of tenant",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/rent-payments/tenant/TN-0147",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "rent-payments",
+            "tenant",
+            "TN-0147"
+          ]
+        }
+      }
+    },
+    {
+      "name": "E3 delete rent payment",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/rent-payments/delete/{{rentPaymentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "rent-payments",
+            "delete",
+            "{{rentPaymentId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "E3 delete lease with payments (409 fail)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/delete/{{signedLeaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "delete",
+            "{{signedLeaseId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "F1 leases per status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/stats/by-status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "stats",
+            "by-status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "F2 caretaker absent (cancel day)",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/cancel-day?caretakerId={{caretakerId}}&date=2026-10-20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "cancel-day"
+          ],
+          "query": [
+            {
+              "key": "caretakerId",
+              "value": "{{caretakerId}}"
+            },
+            {
+              "key": "date",
+              "value": "2026-10-20"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bonus dashboard summary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dashboard/summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dashboard",
+            "summary"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bonus leases page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/leases/page?page=0&size=5&sort=startDate,desc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leases",
+            "page"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "5"
+            },
+            {
+              "key": "sort",
+              "value": "startDate,desc"
+            }
+          ]
+        }
+      }
+    }
+  ]
+} 
