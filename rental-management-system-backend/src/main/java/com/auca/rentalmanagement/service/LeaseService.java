@@ -1,11 +1,12 @@
-
 package com.auca.rentalmanagement.service;
 
 import com.auca.rentalmanagement.model.Lease;
 import com.auca.rentalmanagement.model.LeaseStatus;
 import com.auca.rentalmanagement.repository.LeaseRepository;
+import com.auca.rentalmanagement.repository.RentPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +18,9 @@ public class LeaseService {
 
     @Autowired
     private LeaseRepository leaseRepository;
+
+    @Autowired
+    private RentPaymentRepository rentPaymentRepository;
 
     // D1: Save lease with business rules
     public String save(Lease lease) {
@@ -34,7 +38,6 @@ public class LeaseService {
             return "Caretaker already has a lease starting on that date";
         }
 
-        // Every new lease must start with APPLIED status
         lease.setStatus(LeaseStatus.APPLIED);
         lease.setId(null);
 
@@ -132,17 +135,41 @@ public class LeaseService {
         return "Lease status updated successfully";
     }
 
-    // Part A: Delete lease
+    // E3: Delete lease only when it has no rent payments
     public String delete(UUID id) {
 
-        if (!leaseRepository.existsById(id)) {
+        Optional<Lease> found = leaseRepository.findById(id);
+
+        if (found.isEmpty()) {
             return "The lease with that id does not exist";
         }
 
-        leaseRepository.deleteById(id);
+        Lease lease = found.get();
+
+        if (rentPaymentRepository.existsByLease(lease)) {
+            return "That lease has rent payments, delete them first";
+        }
+
+        leaseRepository.delete(lease);
 
         return "Lease deleted successfully";
     }
+
+    // F1: Get lease counts grouped by status
+    public List<Object[]> getLeaseStatsByStatus() {
+        return leaseRepository.countLeasesByStatus();
+    }
+
+    // F2: Cancel leases for one caretaker and date
+    @Transactional
+    public int cancelLeasesByCaretakerAndDate(
+            UUID caretakerId, LocalDate date) {
+
+        return leaseRepository.cancelLeasesByCaretakerAndDate(
+                caretakerId,
+                date,
+                LeaseStatus.REJECTED,
+                LeaseStatus.SIGNED
+        );
+    }
 }
-
-

@@ -1,4 +1,3 @@
-
 package com.auca.rentalmanagement.controller;
 
 import com.auca.rentalmanagement.model.Lease;
@@ -116,7 +115,7 @@ public class LeaseController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    // Part A: Delete lease
+    // E3: Delete lease with rent-payment protection
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
 
@@ -124,11 +123,36 @@ public class LeaseController {
 
         if (message.equals("Lease deleted successfully")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals(
+                "That lease has rent payments, delete them first")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+    // F1: Get number of leases per status
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> getLeaseStatsByStatus() {
+
+        return new ResponseEntity<>(
+                leaseService.getLeaseStatsByStatus(),
+                HttpStatus.OK);
+    }
+
+    // F2: Cancel caretaker's leases on a particular date
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelLeasesByCaretakerAndDate(
+            @RequestParam UUID caretakerId,
+            @RequestParam String date) {
+
+        LocalDate selectedDate = LocalDate.parse(date);
+
+        int count = leaseService.cancelLeasesByCaretakerAndDate(
+                caretakerId, selectedDate);
+
+        return new ResponseEntity<>(
+                count + " leases cancelled",
+                HttpStatus.OK);
+    }
 }
-
-
-
