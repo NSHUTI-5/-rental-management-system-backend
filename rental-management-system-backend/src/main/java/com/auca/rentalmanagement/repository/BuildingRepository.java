@@ -17,5 +17,9 @@ public interface BuildingRepository extends JpaRepository<Building, UUID> {
            "ORDER BY b.buildingNumber ASC")
     List<Building> findFreeBuildings();
 
+    // D4: Find a building using its building number
+    Building findByBuildingNumber(int buildingNumber);
 }
+
+
 

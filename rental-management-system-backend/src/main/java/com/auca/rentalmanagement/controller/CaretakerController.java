@@ -71,6 +71,44 @@ public class CaretakerController {
         }
     }
 
+    // D3: Add maintenance skill to caretaker
+    @PutMapping("/{caretakerId}/maintenance-skills/{maintenanceSkillId}")
+    public ResponseEntity<String> addMaintenanceSkill(
+            @PathVariable UUID caretakerId,
+            @PathVariable UUID maintenanceSkillId) {
+
+        String message = caretakerService.addMaintenanceSkill(
+                caretakerId, maintenanceSkillId);
+
+        if (message.equals("Maintenance skill added to the caretaker")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals("The caretaker with that id does not exist")
+                || message.equals("That maintenance skill does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    // D4: Change caretaker's building
+    @PatchMapping("/{caretakerId}/building")
+    public ResponseEntity<String> changeBuilding(
+            @PathVariable UUID caretakerId,
+            @RequestParam int buildingNumber) {
+
+        String message = caretakerService.changeBuilding(
+                caretakerId, buildingNumber);
+
+        if (message.equals("Building changed successfully")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals("The caretaker with that id does not exist")
+                || message.equals("The building with that buildingNumber does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
     // Delete caretaker
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
@@ -83,4 +121,5 @@ public class CaretakerController {
         }
     }
 }
+
 

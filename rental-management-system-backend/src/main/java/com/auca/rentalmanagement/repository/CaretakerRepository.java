@@ -2,6 +2,7 @@
 package com.auca.rentalmanagement.repository;
 
 import com.auca.rentalmanagement.model.Caretaker;
+import com.auca.rentalmanagement.model.Building;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +17,8 @@ public interface CaretakerRepository extends JpaRepository<Caretaker, UUID> {
            "WHERE LOWER(ms.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Caretaker> findByMaintenanceSkillName(@Param("name") String name);
 
+    // D4: Check whether a building is assigned to a caretaker
+    boolean existsByBuilding(Building building);
 }
+
 

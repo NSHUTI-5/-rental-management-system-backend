@@ -1,8 +1,8 @@
-
 package com.auca.rentalmanagement.repository;
 
 import com.auca.rentalmanagement.model.Lease;
 import com.auca.rentalmanagement.model.LeaseStatus;
+import com.auca.rentalmanagement.model.Caretaker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -20,4 +20,10 @@ public interface LeaseRepository extends JpaRepository<Lease, UUID> {
             LocalDate end
     );
 
+    // D1: Check whether caretaker already has a non-rejected lease on this date
+    boolean existsByCaretakerAndStartDateAndStatusNot(
+            Caretaker caretaker,
+            LocalDate startDate,
+            LeaseStatus status
+    );
 }
