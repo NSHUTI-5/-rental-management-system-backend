@@ -3,6 +3,7 @@ package com.auca.rentalmanagement.service;
 
 import com.auca.rentalmanagement.model.Tenant;
 import com.auca.rentalmanagement.repository.TenantRepository;
+import com.auca.rentalmanagement.repository.CaretakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class TenantService {
 
     @Autowired
     private TenantRepository tenantRepository;
+
+    @Autowired
+    private CaretakerRepository caretakerRepository;
 
     // Part A: Save tenant
     public String save(Tenant tenant) {
@@ -31,6 +35,16 @@ public class TenantService {
     // B1: Find tenants by last name
     public List<Tenant> getByLastName(String lastName) {
         return tenantRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    // C4: Check whether the caretaker exists
+    public boolean caretakerExists(UUID caretakerId) {
+        return caretakerRepository.existsById(caretakerId);
+    }
+
+    // C4: Get unique tenants belonging to a caretaker's leases
+    public List<Tenant> getTenantsOfCaretaker(UUID caretakerId) {
+        return tenantRepository.findDistinctTenantsByCaretakerId(caretakerId);
     }
 
     // Part A: Get tenant by ID
@@ -67,3 +81,4 @@ public class TenantService {
         return "Tenant deleted successfully";
     }
 }
+

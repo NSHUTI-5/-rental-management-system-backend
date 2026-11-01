@@ -33,6 +33,14 @@ public class MaintenanceSkillController {
                 maintenanceSkillService.getAll(), HttpStatus.OK);
     }
 
+    // C3: Get maintenance skills that no caretaker holds
+    @GetMapping("/unused")
+    public ResponseEntity<List<MaintenanceSkill>> getUnusedSkills() {
+        return new ResponseEntity<>(
+                maintenanceSkillService.getUnusedSkills(),
+                HttpStatus.OK);
+    }
+
     // Get maintenance skill by ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {

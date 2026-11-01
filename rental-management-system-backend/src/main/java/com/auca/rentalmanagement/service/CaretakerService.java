@@ -28,6 +28,11 @@ public class CaretakerService {
         return caretakerRepository.findAll();
     }
 
+    // C1: Find caretakers by maintenance skill
+    public List<Caretaker> getByMaintenanceSkill(String name) {
+        return caretakerRepository.findByMaintenanceSkillName(name);
+    }
+
     // Get caretaker by ID
     public Optional<Caretaker> getById(UUID id) {
         return caretakerRepository.findById(id);
@@ -69,3 +74,4 @@ public class CaretakerService {
         return "Caretaker deleted successfully";
     }
 }
+

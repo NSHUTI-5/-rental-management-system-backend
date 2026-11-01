@@ -36,8 +36,23 @@ public class TenantController {
     public ResponseEntity<List<Tenant>> getByLastName(@RequestParam String lastName) {
         return new ResponseEntity<>(
                 tenantService.getByLastName(lastName),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
+    }
+
+    // C4: Get tenants of a particular caretaker
+    @GetMapping("/of-caretaker/{caretakerId}")
+    public ResponseEntity<?> getTenantsOfCaretaker(
+            @PathVariable UUID caretakerId) {
+
+        if (!tenantService.caretakerExists(caretakerId)) {
+            return new ResponseEntity<>(
+                    "The caretaker with that id does not exist",
+                    HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(
+                tenantService.getTenantsOfCaretaker(caretakerId),
+                HttpStatus.OK);
     }
 
     // Part A: Get tenant by ID
@@ -76,4 +91,3 @@ public class TenantController {
         }
     }
 }
-

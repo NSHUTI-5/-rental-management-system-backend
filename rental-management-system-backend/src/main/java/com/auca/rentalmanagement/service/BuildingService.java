@@ -28,6 +28,11 @@ public class BuildingService {
         return buildingRepository.findAll();
     }
 
+    // C2: Get buildings that have no caretaker
+    public List<Building> getFreeBuildings() {
+        return buildingRepository.findFreeBuildings();
+    }
+
     // Get building by ID
     public Optional<Building> getById(UUID id) {
         return buildingRepository.findById(id);
@@ -59,3 +64,4 @@ public class BuildingService {
         return "Building deleted successfully";
     }
 }
+

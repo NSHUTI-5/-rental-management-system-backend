@@ -32,6 +32,14 @@ public class BuildingController {
         return new ResponseEntity<>(buildingService.getAll(), HttpStatus.OK);
     }
 
+    // C2: Get buildings that have no caretaker
+    @GetMapping("/free")
+    public ResponseEntity<List<Building>> getFreeBuildings() {
+        return new ResponseEntity<>(
+                buildingService.getFreeBuildings(),
+                HttpStatus.OK);
+    }
+
     // Get building by ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
@@ -73,4 +81,3 @@ public class BuildingController {
         }
     }
 }
-

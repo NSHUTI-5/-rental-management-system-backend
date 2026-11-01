@@ -28,6 +28,11 @@ public class MaintenanceSkillService {
         return maintenanceSkillRepository.findAll();
     }
 
+    // C3: Get maintenance skills that no caretaker holds
+    public List<MaintenanceSkill> getUnusedSkills() {
+        return maintenanceSkillRepository.findUnusedSkills();
+    }
+
     // Get maintenance skill by ID
     public Optional<MaintenanceSkill> getById(UUID id) {
         return maintenanceSkillRepository.findById(id);

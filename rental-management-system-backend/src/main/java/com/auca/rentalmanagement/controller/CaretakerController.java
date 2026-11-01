@@ -32,6 +32,16 @@ public class CaretakerController {
         return new ResponseEntity<>(caretakerService.getAll(), HttpStatus.OK);
     }
 
+    // C1: Find caretakers by maintenance skill
+    @GetMapping("/by-maintenance-skill")
+    public ResponseEntity<List<Caretaker>> getByMaintenanceSkill(
+            @RequestParam String name) {
+
+        return new ResponseEntity<>(
+                caretakerService.getByMaintenanceSkill(name),
+                HttpStatus.OK);
+    }
+
     // Get caretaker by ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
@@ -73,3 +83,4 @@ public class CaretakerController {
         }
     }
 }
+
