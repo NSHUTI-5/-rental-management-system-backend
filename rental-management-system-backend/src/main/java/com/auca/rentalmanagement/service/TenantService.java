@@ -16,24 +16,29 @@ public class TenantService {
     @Autowired
     private TenantRepository tenantRepository;
 
-    // Save tenant
+    // Part A: Save tenant
     public String save(Tenant tenant) {
         tenant.setId(null);
         tenantRepository.save(tenant);
         return "Tenant saved successfully";
     }
 
-    // Get all tenants
+    // Part A: Get all tenants
     public List<Tenant> getAll() {
         return tenantRepository.findAll();
     }
 
-    // Get tenant by ID
+    // B1: Find tenants by last name
+    public List<Tenant> getByLastName(String lastName) {
+        return tenantRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    // Part A: Get tenant by ID
     public Optional<Tenant> getById(UUID id) {
         return tenantRepository.findById(id);
     }
 
-    // Update tenant
+    // Part A: Update tenant
     public String update(UUID id, Tenant body) {
         Optional<Tenant> found = tenantRepository.findById(id);
 
@@ -52,7 +57,7 @@ public class TenantService {
         return "Tenant updated successfully";
     }
 
-    // Delete tenant
+    // Part A: Delete tenant
     public String delete(UUID id) {
         if (!tenantRepository.existsById(id)) {
             return "The tenant with that id does not exist";
